@@ -1,0 +1,583 @@
+/* ===================================
+   VARIABLES CSS (SISTEMA DE COLORES)
+   =================================== */
+
+/* Variables CSS: Se definen una vez y se reutilizan en todo el documento */
+:root {
+  /* Escala de colores naranja - Colores primarios */
+  --orange-50: #fff7ed;         /* Naranja muy claro - fondos sutiles */
+  --orange-100: #ffedd5;        /* Naranja claro - estados hover sutiles */
+  --orange-200: #fed7aa;        /* Naranja suave - bordes y acentos suaves */
+  --orange-300: #fdba74;        /* Naranja medio claro - elementos secundarios */
+  --orange-400: #fb923c;        /* Naranja medio - botones secundarios */
+  --orange-500: #f97316;        /* Naranja base - color principal de la marca */
+  --orange-600: #ea580c;        /* Naranja oscuro - botones primarios, enlaces */
+  --orange-700: #c2410c;        /* Naranja muy oscuro - hover en botones */
+  --orange-800: #9a3412;        /* Naranja profundo - texto de énfasis */
+  --orange-900: #7c2d12;        /* Naranja más oscuro - fondos oscuros */
+
+  /* Colores neutros - Grises para texto y fondos */
+  --gray-50: #f9fafb;           /* Gris muy claro - fondos */
+  --gray-100: #f3f4f6;          /* Gris claro - fondos secundarios */
+  --gray-200: #e5e7eb;          /* Gris suave - bordes */
+  --gray-300: #d1d5db;          /* Gris medio claro - bordes activos */
+  --gray-400: #9ca3af;          /* Gris medio - texto secundario */
+  --gray-500: #6b7280;          /* Gris - texto terciario */
+  --gray-600: #4b5563;          /* Gris oscuro - texto normal */
+  --gray-700: #374151;          /* Gris muy oscuro - texto principal */
+  --gray-800: #1f2937;          /* Gris profundo - encabezados, footer */
+  --gray-900: #111827;          /* Casi negro - texto de alto contraste */
+
+  /* Colores de estado */
+  --success: #16a34a;           /* Verde - tareas completadas */
+  --error: #dc2626;             /* Rojo - errores, botón eliminar */
+  --warning: --orange-500;      /* Naranja - advertencias, tareas pendientes */
+
+  /* Sombras - Reutilizables */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* Espaciado consistente */
+  --spacing-xs: 0.25rem;        /* 4px */
+  --spacing-sm: 0.5rem;         /* 8px */
+  --spacing-md: 1rem;           /* 16px */
+  --spacing-lg: 1.5rem;         /* 24px */
+  --spacing-xl: 2rem;           /* 32px */
+  --spacing-2xl: 3rem;          /* 48px */
+
+  /* Radio de bordes */
+  --radius-sm: 0.375rem;        /* 6px */
+  --radius-md: 0.5rem;          /* 8px */
+  --radius-lg: 0.75rem;         /* 12px */
+  --radius-xl: 1rem;            /* 16px */
+
+  /* Transiciones */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-base: 0.2s ease-in-out;
+  --transition-slow: 0.3s ease-in-out;
+}
+
+/* ===================================
+   RESET Y ESTILOS GLOBALES
+   =================================== */
+
+/* Selector universal (*): Se aplica a TODOS los elementos del documento */
+* {
+  margin: 0;                    /* Elimina márgenes externos por defecto */
+  padding: 0;                   /* Elimina relleno interno por defecto */
+  box-sizing: border-box;       /* Incluye padding y border en el ancho/alto total */
+}
+
+/* ===================================
+   ESTILOS DEL BODY (CONTENEDOR PRINCIPAL)
+   =================================== */
+
+/* Selector de etiqueta: Se aplica al elemento body */
+body {
+  /* Familia de fuentes del sistema para mejor rendimiento y apariencia nativa */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+  /* Degradado dinámico usando variables CSS */
+  background: linear-gradient(135deg, var(--orange-500) 0%, var(--orange-100) 50%, var(--gray-50) 100%);
+
+  min-height: 100vh;            /* Altura mínima = 100% del viewport (pantalla visible) */
+  display: flex;                /* Activa Flexbox para layout flexible */
+  flex-direction: column;       /* Ordena los hijos en columna (vertical) */
+}
+
+/* ===================================
+   CLASE DE ACCESIBILIDAD
+   =================================== */
+
+/* Clase para ocultar elementos visualmente pero mantenerlos para lectores de pantalla */
+.sr-only {
+  position: absolute;           /* Saca el elemento del flujo normal */
+  width: 1px;                   /* Ancho mínimo (casi invisible) */
+  height: 1px;                  /* Alto mínimo (casi invisible) */
+  padding: 0;
+  margin: -1px;                 /* Margen negativo para colapsar espacio */
+  overflow: hidden;             /* Oculta contenido que se desborda */
+  clip: rect(0, 0, 0, 0);       /* Recorta el elemento (legacy) */
+  white-space: nowrap;          /* Evita saltos de línea */
+  border-width: 0;              /* Sin bordes */
+}
+
+/* ===================================
+   HEADER - BARRA DE NAVEGACIÓN
+   =================================== */
+
+/* Selector de clase: Se aplica a elementos con class="navbar" */
+.navbar {
+  background: var(--orange-800);  /* Usa variable CSS - naranja profundo */
+  padding: var(--spacing-md) var(--spacing-xl);  /* Padding usando variables de espaciado */
+  box-shadow: var(--shadow-md);   /* Sombra reutilizable desde variables */
+}
+
+/* Estilo del logo en la navegación */
+.nav-logo {
+  color: white;                   /* Color del texto */
+  font-size: 1.5rem;              /* Tamaño de fuente (1.5 × tamaño base) */
+  font-weight: 700;               /* Grosor de fuente (700 = negrita) */
+  text-decoration: none;          /* Sin subrayado (para enlaces) */
+  transition: color var(--transition-base);  /* Transición usando variable */
+}
+
+/* Pseudo-clase :hover = cuando el mouse pasa sobre el elemento */
+.nav-logo:hover {
+  color: var(--orange-200);       /* Naranja claro al hacer hover */
+}
+
+/* ===================================
+   CONTENEDOR PRINCIPAL
+   =================================== */
+
+/* Selector de clase: Contenedor que centra el contenido */
+.container {
+  max-width: 48rem;               /* Ancho máximo: 48rem (≈768px) */
+  margin: 0 auto;                 /* Centra horizontalmente: 0 arriba/abajo, auto izq/der */
+  padding: var(--spacing-xl) var(--spacing-md);  /* Usa variables de espaciado */
+  flex: 1;                        /* Crece para ocupar espacio disponible (para footer al fondo) */
+}
+
+/* ===================================
+   TARJETA CONTENEDORA
+   =================================== */
+
+/* Tarjeta blanca que contiene la aplicación */
+.card {
+  background: white;              /* Fondo blanco */
+  border-radius: var(--radius-xl);  /* Usa variable para bordes redondeados */
+  box-shadow: var(--shadow-xl);   /* Sombra profunda usando variable */
+  padding: var(--spacing-xl);     /* Espaciado usando variable */
+  border-top: 4px solid var(--orange-500);  /* Borde superior naranja como acento */
+}
+
+/* ===================================
+   HEADER DE LA TARJETA
+   =================================== */
+
+/* Contenedor del título */
+.header {
+  display: flex;                  /* Activa Flexbox */
+  align-items: center;            /* Centra verticalmente los hijos */
+  gap: var(--spacing-lg);         /* Espacio usando variable */
+  margin-bottom: var(--spacing-xl);  /* Margen usando variable */
+}
+
+/* Estilo del título h1 dentro del header */
+.header h1 {
+  font-size: 1.875rem;            /* Tamaño de fuente: 1.875rem (≈30px) */
+  font-weight: 700;               /* Negrita */
+  color: var(--orange-700);       /* Color naranja oscuro para el título */
+  background: linear-gradient(135deg, var(--orange-600), var(--orange-400));  /* Degradado de texto */
+  -webkit-background-clip: text;  /* Clip del fondo al texto (Safari) */
+  background-clip: text;          /* Clip del fondo al texto */
+  -webkit-text-fill-color: transparent;  /* Hace el texto transparente para mostrar el degradado */
+}
+
+/* ===================================
+   FORMULARIO DE TAREAS
+   =================================== */
+
+/* Contenedor del formulario con input y botón */
+.task-form {
+  display: flex;                  /* Layout flexbox horizontal */
+  gap: var(--spacing-sm);         /* Espacio usando variable */
+  margin-bottom: var(--spacing-lg);  /* Margen usando variable */
+  flex-wrap: wrap;                /* Permite que los elementos se envuelvan en pantallas pequeñas */
+  align-items: stretch;           /* Estira los elementos para que tengan la misma altura */
+}
+
+/* Contenedor de grupo de formulario (para inputs) */
+.form-group {
+  display: flex;                  /* Layout flexbox */
+  flex-direction: column;         /* Dirección vertical */
+  flex: 1;                        /* Crece para ocupar espacio disponible */
+  min-width: 200px;               /* Ancho mínimo para evitar que se comprima demasiado */
+}
+
+/* Campo de entrada de texto */
+.task-input {
+  flex: 1;                        /* Crece para llenar el espacio disponible */
+  padding: 0.75rem var(--spacing-md);  /* Espaciado usando variables */
+  border: 2px solid var(--orange-200);  /* Borde naranja claro */
+  border-radius: var(--radius-md);  /* Bordes usando variable */
+  font-size: 1rem;                /* Tamaño de fuente estándar */
+  outline: none;                  /* Quita el outline por defecto del navegador */
+  transition: all var(--transition-base);  /* Transición usando variable */
+  background: var(--gray-50);     /* Fondo gris muy claro */
+}
+
+/* Estado :focus = cuando el input está seleccionado/activo */
+.task-input:focus {
+  border-color: var(--orange-500);  /* Borde naranja al enfocar */
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);  /* Anillo naranja de enfoque */
+  background: white;              /* Fondo blanco cuando está activo */
+}
+
+/* Validación: cuando el input es inválido y ha sido tocado */
+.task-input:invalid:not(:placeholder-shown) {
+  border-color: var(--error);     /* Borde rojo para error usando variable */
+}
+
+/* Campo de entrada de fecha */
+.task-date-input {
+  padding: 0.75rem var(--spacing-md);  /* Espaciado usando variables */
+  border: 2px solid var(--orange-200);  /* Borde naranja claro */
+  border-radius: var(--radius-md);  /* Bordes usando variable */
+  font-size: 1rem;                /* Tamaño de fuente estándar */
+  outline: none;                  /* Quita el outline por defecto del navegador */
+  transition: all var(--transition-base);  /* Transición usando variable */
+  background: var(--gray-50);     /* Fondo gris muy claro */
+  color: var(--gray-700);         /* Color de texto */
+  font-family: inherit;           /* Hereda la fuente del body */
+  cursor: pointer;                /* Cursor de mano */
+}
+
+/* Estado :focus del input de fecha */
+.task-date-input:focus {
+  border-color: var(--orange-500);  /* Borde naranja al enfocar */
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);  /* Anillo naranja de enfoque */
+  background: white;              /* Fondo blanco cuando está activo */
+}
+
+/* Estilo para el input de fecha en navegadores WebKit (Chrome, Safari) */
+.task-date-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;                /* Cursor de mano para el icono del calendario */
+  filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(346deg) brightness(98%) contrast(97%);  /* Colorea el icono de naranja */
+}
+
+/* ===================================
+   BOTONES
+   =================================== */
+
+/* Botón principal de agregar tarea */
+.btn-add {
+  display: flex;                  /* Flexbox para alinear contenido */
+  align-items: center;            /* Centra verticalmente */
+  gap: var(--spacing-sm);         /* Espacio usando variable */
+  padding: 0.75rem var(--spacing-lg);  /* Espaciado usando variables */
+  background: linear-gradient(135deg, var(--orange-600), var(--orange-500));  /* Degradado naranja */
+  color: white;                   /* Texto blanco */
+  border: none;                   /* Sin borde */
+  border-radius: var(--radius-md);  /* Bordes usando variable */
+  font-size: 1rem;                /* Tamaño de fuente */
+  font-weight: 600;               /* Peso semi-negrita */
+  cursor: pointer;                /* Cursor de mano al pasar */
+  transition: all var(--transition-base);  /* Transición usando variable */
+  box-shadow: var(--shadow-md);   /* Sombra para profundidad */
+}
+
+/* Estado hover del botón */
+.btn-add:hover {
+  background: linear-gradient(135deg, var(--orange-700), var(--orange-600));  /* Degradado más oscuro */
+  transform: translateY(-2px);    /* Eleva el botón ligeramente */
+  box-shadow: var(--shadow-lg);   /* Sombra más pronunciada */
+}
+
+/* Estado :active = cuando el botón está siendo presionado */
+.btn-add:active {
+  transform: scale(0.98);         /* Reduce ligeramente el tamaño (efecto de presión) */
+  box-shadow: var(--shadow-sm);   /* Reduce la sombra */
+}
+
+/* ===================================
+   ESTADÍSTICAS
+   =================================== */
+
+/* Contenedor de las estadísticas de tareas */
+.stats {
+  font-size: 0.875rem;            /* Texto más pequeño */
+  color: var(--gray-600);         /* Color gris usando variable */
+  margin-bottom: var(--spacing-md);  /* Espacio usando variable */
+  display: flex;                  /* Layout flexbox */
+  align-items: center;            /* Alineación vertical */
+  gap: var(--spacing-sm);         /* Espacio usando variable */
+  padding: var(--spacing-md);     /* Padding interno */
+  background: var(--orange-50);   /* Fondo naranja muy claro */
+  border-radius: var(--radius-md);  /* Bordes redondeados */
+  border-left: 4px solid var(--orange-400);  /* Borde izquierdo naranja como acento */
+}
+
+/* Separador visual ("|") entre estadísticas */
+.stats .separator {
+  margin: 0 var(--spacing-xs);    /* Margen usando variable */
+  color: var(--orange-300);       /* Color naranja suave */
+}
+
+/* Número de tareas completadas (color verde) */
+.stats .completed-text strong {
+  color: var(--success);          /* Verde usando variable */
+}
+
+/* Número de tareas pendientes (color naranja) */
+.stats .pending-text strong {
+  color: var(--orange-600);       /* Naranja usando variable */
+}
+
+/* ===================================
+   BOTONES DE FILTRO
+   =================================== */
+
+/* Contenedor de los botones de filtro */
+.filter-buttons {
+  display: flex;                  /* Layout flexbox */
+  gap: var(--spacing-sm);         /* Espacio usando variable */
+  margin-bottom: var(--spacing-lg);  /* Espacio usando variable */
+}
+
+/* Estilo individual de cada botón de filtro */
+.filter-btn {
+  padding: var(--spacing-sm) var(--spacing-md);  /* Espaciado usando variables */
+  border: 2px solid var(--orange-200);  /* Borde naranja claro */
+  border-radius: var(--radius-md);  /* Bordes usando variable */
+  font-weight: 500;               /* Peso medio */
+  cursor: pointer;                /* Cursor de mano */
+  transition: all var(--transition-base);  /* Transición usando variable */
+  background: white;              /* Fondo blanco */
+  color: var(--orange-700);       /* Texto naranja oscuro */
+}
+
+/* Estado hover de botones de filtro */
+.filter-btn:hover {
+  background: var(--orange-50);   /* Fondo naranja muy claro */
+  border-color: var(--orange-400);  /* Borde naranja medio */
+  transform: translateY(-1px);    /* Eleva ligeramente */
+}
+
+/* Estado activo del filtro (botón seleccionado) */
+.filter-btn.active {
+  background: linear-gradient(135deg, var(--orange-600), var(--orange-500));  /* Degradado naranja */
+  color: white;                   /* Texto blanco */
+  border-color: var(--orange-700);  /* Borde naranja oscuro */
+  box-shadow: var(--shadow-md);   /* Sombra para resaltar */
+}
+
+/* ===================================
+   LISTA DE TAREAS
+   =================================== */
+
+/* Contenedor de la lista de tareas (ul) */
+.task-list {
+  list-style: none;               /* Sin viñetas */
+  display: flex;                  /* Layout flexbox */
+  flex-direction: column;         /* Dirección vertical */
+  gap: var(--spacing-md);         /* Espacio usando variable */
+}
+
+/* Elemento individual de tarea (li) */
+.task-item {
+  display: flex;                  /* Layout flexbox horizontal */
+  align-items: center;            /* Centra verticalmente el contenido */
+  gap: var(--spacing-md);         /* Espacio usando variable */
+  padding: var(--spacing-md);     /* Espaciado usando variable */
+  background: white;              /* Fondo blanco */
+  border-radius: var(--radius-md);  /* Bordes usando variable */
+  box-shadow: var(--shadow-sm);   /* Sombra usando variable */
+  transition: all var(--transition-base);  /* Transición usando variable */
+  border-left: 3px solid var(--orange-300);  /* Borde izquierdo naranja */
+}
+
+/* Efecto hover en la tarea completa */
+.task-item:hover {
+  box-shadow: var(--shadow-md);   /* Sombra más pronunciada usando variable */
+  transform: translateX(4px);     /* Desplaza ligeramente a la derecha */
+  border-left-color: var(--orange-500);  /* Borde más intenso */
+}
+
+/* Checkbox de la tarea */
+.task-checkbox {
+  width: 1.25rem;                 /* Ancho del checkbox */
+  height: 1.25rem;                /* Alto del checkbox */
+  cursor: pointer;                /* Cursor de mano */
+  accent-color: var(--orange-600);  /* Color naranja cuando está marcado */
+  flex-shrink: 0;                 /* No se encoge si falta espacio */
+}
+
+/* Contenedor de información de la tarea (texto + fecha) */
+.task-info {
+  flex: 1;                        /* Crece para ocupar espacio disponible */
+  display: flex;                  /* Layout flexbox */
+  flex-direction: column;         /* Dirección vertical */
+  gap: var(--spacing-xs);         /* Pequeño espacio entre texto y fecha */
+}
+
+/* Texto de la tarea (label) */
+.task-text {
+  font-size: 1.125rem;            /* Tamaño de fuente ligeramente mayor */
+  color: var(--gray-800);         /* Color gris oscuro usando variable */
+  cursor: pointer;                /* Cursor de mano (clickeable) */
+  user-select: none;              /* Evita selección de texto al hacer clic */
+  transition: color var(--transition-base);  /* Transición suave */
+  font-weight: 500;               /* Peso medio para destacar */
+}
+
+/* Estilo de tarea completada */
+.task-text.completed {
+  text-decoration: line-through;  /* Texto tachado */
+  color: var(--gray-400);         /* Color gris claro usando variable */
+}
+
+/* Fecha de la tarea */
+.task-date {
+  font-size: 0.875rem;            /* Tamaño de fuente más pequeño */
+  color: var(--orange-600);       /* Color naranja */
+  font-weight: 500;               /* Peso medio */
+  display: flex;                  /* Layout flexbox */
+  align-items: center;            /* Centra verticalmente */
+  gap: var(--spacing-xs);         /* Espacio entre icono y texto */
+}
+
+/* Estilo para tareas que vencen hoy */
+.task-due-today {
+  border-left-color: var(--orange-600);  /* Borde izquierdo naranja intenso */
+  background: linear-gradient(to right, var(--orange-50), white);  /* Degradado sutil de fondo */
+}
+
+/* Animación pulsante para tareas que vencen hoy */
+.task-due-today::before {
+  content: '';                    /* Contenido vacío para crear el elemento */
+  position: absolute;             /* Posicionamiento absoluto */
+  left: 0;                        /* Alineado a la izquierda */
+  top: 0;                         /* Alineado arriba */
+  bottom: 0;                      /* Alineado abajo */
+  width: 4px;                     /* Ancho de 4px */
+  background: var(--orange-600);  /* Color naranja */
+  animation: pulse 2s ease-in-out infinite;  /* Animación pulsante infinita */
+}
+
+/* Definición de la animación pulse */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;                   /* Opacidad completa */
+  }
+  50% {
+    opacity: 0.5;                 /* Opacidad media (parpadeo) */
+  }
+}
+
+/* Estilo para tareas vencidas */
+.task-overdue {
+  border-left-color: var(--error);  /* Borde izquierdo rojo */
+  background: linear-gradient(to right, #fee2e2, white);  /* Degradado rojo muy claro */
+}
+
+/* Ajuste de posición para el pseudo-elemento */
+.task-item {
+  position: relative;             /* Necesario para el ::before absoluto */
+}
+
+/* Botón de eliminar tarea */
+.btn-delete {
+  padding: var(--spacing-sm);     /* Espaciado usando variable */
+  background: none;               /* Sin fondo por defecto */
+  border: none;                   /* Sin borde */
+  color: var(--error);            /* Color rojo usando variable */
+  cursor: pointer;                /* Cursor de mano */
+  border-radius: var(--radius-md);  /* Bordes usando variable */
+  transition: all var(--transition-base);  /* Transición usando variable */
+  flex-shrink: 0;                 /* No se encoge */
+}
+
+/* Estado hover del botón eliminar */
+.btn-delete:hover {
+  background: #fee2e2;            /* Fondo rojo muy claro */
+  transform: scale(1.1);          /* Agranda ligeramente el botón */
+}
+
+/* ===================================
+   ESTADO VACÍO
+   =================================== */
+
+/* Mensaje cuando no hay tareas */
+.empty-state {
+  text-align: center;             /* Texto centrado */
+  padding: var(--spacing-2xl) 0;  /* Espaciado usando variable */
+  color: var(--gray-400);         /* Color gris usando variable */
+  font-size: 1.125rem;            /* Texto ligeramente mayor */
+  display: none;                  /* Oculto por defecto */
+  background: var(--orange-50);   /* Fondo naranja muy claro */
+  border-radius: var(--radius-md);  /* Bordes redondeados */
+  border: 2px dashed var(--orange-200);  /* Borde punteado naranja */
+}
+
+/* Clase modificadora para mostrar el estado vacío */
+.empty-state.show {
+  display: block;                 /* Se muestra cuando se agrega esta clase */
+}
+
+/* ===================================
+   FOOTER
+   =================================== */
+
+/* Pie de página */
+footer {
+  background: var(--orange-900);  /* Fondo naranja oscuro usando variable */
+  color: white;                   /* Texto blanco */
+  text-align: center;             /* Texto centrado */
+  padding: var(--spacing-lg);     /* Espaciado usando variable */
+  margin-top: auto;               /* Empuja el footer al fondo (con flex en body) */
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);  /* Sombra superior */
+}
+
+/* Texto dentro del footer */
+footer p {
+  font-size: 0.875rem;            /* Tamaño de fuente pequeño */
+  opacity: 0.9;                   /* Ligeramente transparente */
+}
+
+/* ===================================
+   DISEÑO RESPONSIVE (MEDIA QUERIES)
+   =================================== */
+
+/* Media query: Se aplica cuando el ancho de pantalla es 640px o menor (móviles) */
+@media (max-width: 640px) {
+
+  /* Navbar más compacta en móvil */
+  .navbar {
+    padding: var(--spacing-md);   /* Reduce padding usando variable */
+  }
+
+  /* Logo más pequeño en móvil */
+  .nav-logo {
+    font-size: 1.25rem;           /* Reduce tamaño de fuente */
+  }
+
+  /* Formulario en columna (vertical) en móvil */
+  .task-form {
+    flex-direction: column;       /* Input y botón apilados verticalmente */
+  }
+
+  /* Grupos de formulario ocupan ancho completo en móvil */
+  .form-group {
+    min-width: 100%;              /* Ancho completo */
+  }
+
+  /* Botones de filtro en columna en móvil */
+  .filter-buttons {
+    flex-direction: column;       /* Botones apilados verticalmente */
+  }
+
+  /* Estadísticas en columna en móvil */
+  .stats {
+    flex-direction: column;       /* Estadísticas apiladas */
+    align-items: flex-start;      /* Alineadas a la izquierda */
+  }
+
+  /* Oculta separadores en móvil */
+  .stats .separator {
+    display: none;                /* No muestra "|" en móvil */
+  }
+
+  /* Reduce espaciado en tarjeta para móvil */
+  .card {
+    padding: var(--spacing-md);   /* Reduce padding */
+  }
+
+  /* Título más pequeño en móvil */
+  .header h1 {
+    font-size: 1.5rem;            /* Reduce tamaño */
+  }
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html> <!--Tipo de documento-->
+<html lang="es"> <!-- Tag padre: Propiedad idioma-->
+<head> <!-- Tag Hijo: Metadatos: datos que describe otros datos-->
+  <meta charset="UTF-8"> <!-- codificación de caracteres -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Para que detecte el tipo de pantalla, content para q sea responsive-->
+  <meta name="description" content="Aplicación de gestión de tareas para organizar tus actividades diarias">
+  <title>Lista de Tareas - Práctica JS</title> <!-- titulo de la peestaña -->
+  <link rel="stylesheet" href="/ListaTareas/styles.css"> <!-- Se manejaran todos los estilos -->
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <a href="#" class="nav-logo">Gestor de Tareas</a>
+    </nav>
+  </header>
+
+   <main class="container">
+    <section class="card">
+      <header class="header">
+        <h1>Lista de Tareas</h1>
+      </header>
+
+      <form id="taskForm" class="task-form" aria-label="Formulario para agregar tareas">
+        <!-- Campo de texto para el nombre de la tarea -->
+        <div class="form-group">
+          <label for="taskInput" class="sr-only">Nueva tarea</label>
+          <input
+            type="text"
+            id="taskInput"
+            name="taskInput"
+            placeholder="Ingresa una nueva tarea..."
+            class="task-input"
+            required
+            aria-required="true"
+          >
+        </div>
+
+        <!-- Campo de fecha para la fecha de vencimiento -->
+        <div class="form-group">
+          <label for="taskDate" class="sr-only">Fecha de vencimiento</label>
+          <input
+            type="date"
+            id="taskDate"
+            name="taskDate"
+            class="task-date-input"
+            aria-label="Fecha de vencimiento de la tarea"
+          >
+        </div>
+
+        <!-- Botón para agregar la tarea -->
+        <button type="submit" class="btn-add" aria-label="Agregar nueva tarea">
+          Agregar
+        </button>
+      </form>
+
+      <div class="stats" role="status" aria-live="polite">
+        <span><strong id="totalCount">0</strong> tareas totales</span>
+        <span class="separator" aria-hidden="true">|</span>
+        <span class="completed-text"><strong id="completedCount">0</strong> completadas</span>
+        <span class="separator" aria-hidden="true">|</span>
+        <span class="pending-text"><strong id="pendingCount">0</strong> pendientes</span>
+      </div>
+
+      <div class="filter-buttons" role="group" aria-label="Filtros de tareas">
+        <button class="filter-btn active" data-filter="all" aria-pressed="true">Todas</button>
+        <button class="filter-btn" data-filter="completed" aria-pressed="false">Completadas</button>
+        <button class="filter-btn" data-filter="pending" aria-pressed="false">Pendientes</button>
+      </div>
+
+      <ul id="taskList" class="task-list" role="list"></ul>
+
+      <div id="emptyState" class="empty-state" role="status">
+        <p>No hay tareas para mostrar</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Gestor de Tareas. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="/ListaTareas/app.js"></script>
+</body>
+</html>
