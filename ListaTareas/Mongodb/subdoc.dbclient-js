@@ -1,0 +1,76 @@
+/* filtrar registros de la coleccion usuario */
+db('MongoListaNotas').collection('usuarios').find({});
+/* Crear registro con subdocumento */
+db('MongoListaNotas').collection('usuario').insertOne({
+    nombre:"juan",
+    apellido:"almeciga",
+    edad:25,
+    direccion : {
+        calle:"calle 1",
+        numero:123,
+        ciudad:"medellin"
+    }
+});
+db('MongoListaNotas').collection('usuario').insertOne({
+    nombre:"juan2",
+    apellido:"almeciga2",
+    edad:25,
+    direccion : {
+        calle:"calle 1",
+        numero:123,
+        ciudad:"bogota"
+    }
+});
+
+/* filtrar por subdocumento */
+db('MongoListaNotas').collection('usuario').find({"direccion.ciudad":"medellin"});
+// actualizar registro subdocumento 1. busqueda, 2. parametro a actualiza
+db('MongoListaNotas').collection('usuario').updateOne({"direccion.ciudad":"medellin"},{$set:{"direccion.ciudad":"bogota"}});
+db('MongoListaNotas').collection('usuario').updateMany({"nombre":"claudia"}, {$set:{"direccion.ciudad":"bogota"}});
+db('MongoListaNotas').collection('usuario').find({"direccion.ciudad":"bogota"});
+
+//vectores o arreglos en mongo
+db('MongoListaNotas').collection('usuario').insertMany([
+    {
+        nombre:"juan4",
+        apellido:"almeciga4",
+        edad:25,
+        direccion : {
+            calle:"calle 1",
+            numero:123,
+            ciudad:"medellin"
+        },
+        notas:[1,2,3,4,5],
+        intereses:["musica","deportes","tecnologia"]
+    },
+    {
+        nombre:"juan3",
+        apellido:"almeciga3",
+        edad:25,
+        direccion : {
+            calle:"calle 1",
+            numero:123,
+            ciudad:"medellin"
+        },
+        notas:[5,6,7],
+        intereses:["ejercicio","deportes","tecnologia"]
+    }
+]);
+//updateone con push, para agregar nuevo elementos en el array
+db('MongoListaNotas').collection('usuario').updateOne({"nombre":"juan4"}, {$push : {"notas":8}});
+db('MongoListaNotas').collection('usuario').find({"nombre":"juan4"});
+
+db('MongoListaNotas')
+    .collection('usuario')
+    .updateOne({"nombre":"juan4"}, 
+        {
+            $push : 
+            {
+                "notas":
+                {
+                    $each:[9,10,11] //agregar varios elementos al array
+                } 
+            }
+        }
+    );
+

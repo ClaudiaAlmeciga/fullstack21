@@ -5,3 +5,13 @@ User: fullstack
 Pass: bXAlDtW4qZFGUimDjSMjl8b7DrG1Khg5
 External Port: 5432
 postgresql://fullstack:bXAlDtW4qZFGUimDjSMjl8b7DrG1Khg5@dpg-d47l7m7diees739f38g0-a.oregon-postgres.render.com/basedatosfullstack_5m98
+
+--========================
+--MongoDB
+--========================
+mongodb+srv://milenaalmeciga_db_user:M5CzKgbCITpTb0LV@fullstack.rfk1el9.mongodb.net/?appName=fullstack
+compass
+mongodb+srv://milenaalmeciga_db_user:M5CzKgbCITpTb0LV@fullstack.rfk1el9.mongodb.net/
+
+milenaalmeciga_db_user
+M5CzKgbCITpTb0LV

@@ -1,0 +1,281 @@
+// ===============================================
+// Base: Notas (MongoDB)  –  Ejecutar en mongosh
+// ===============================================
+// Limpieza opcional de colecciones de prueba
+// definir variables
+
+db('MongoListaNotas').collection('usuario').drop();
+db('MongoListaNotas').collection('estados').drop();
+db('MongoListaNotas').collection('etiquetas').drop();
+db('MongoListaNotas').collection('notas').drop();
+
+// ---------------------------
+// 1) Colecciones + validación
+// ---------------------------
+
+// Usuarios: embebemos "perfil" (1:1) dentro del usuario
+db('MongoListaNotas').createCollection("usuarios", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["nombre", "apellido", "email", "contrasena"],
+            properties: {
+                nombre: { bsonType: "string", minLength: 1 },
+                apellido: { bsonType: "string", minLength: 1 },
+                email: { bsonType: "string", pattern: "^.+@.+\\..+$" },
+                contrasena: { bsonType: "string", minLength: 4, maxLength: 128 },
+                perfil: {
+                    bsonType: "object",
+                    properties: {
+                        telefono: { bsonType: ["string", "null"] },
+                        direccion: { bsonType: ["string", "null"] },
+                        bio: { bsonType: ["string", "null"] },
+                        fecha_nacimiento: { bsonType: ["date", "null"] }
+                    },
+                    additionalProperties: true
+                },
+                creadoEn: { bsonType: "date" },
+                actualizadoEn: { bsonType: "date" }
+            },
+            additionalProperties: true
+        }
+    }
+});
+
+// Estados (catálogo)
+db('MongoListaNotas').createCollection("estados", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["nombre"],
+      properties: {
+        nombre: { bsonType: "string", enum: ["Pendiente","En Progreso","Completado","Archivado"] },
+        creadoEn: { bsonType: "date" }
+      }
+    }
+  }
+});
+
+// Etiquetas (catálogo)
+db('MongoListaNotas').createCollection("etiquetas", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["nombre"],
+      properties: {
+        nombre: { bsonType: "string", minLength: 1 },
+        creadoEn: { bsonType: "date" }
+      }
+    }
+  }
+});
+
+// Notas: referencia a usuarioId y estadoId, y denormalizamos estadoNombre y etiquetas por nombre
+db('MongoListaNotas').createCollection("notas", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["usuarioId", "titulo", "descripcion", "estadoId", "estadoNombre", "fecha_alerta"],
+      properties: {
+        usuarioId: { bsonType: "objectId" },
+        usuarioEmail: { bsonType: ["string", "null"] },
+        titulo: { bsonType: "string", minLength: 1, maxLength: 100 },
+        descripcion: { bsonType: "string", minLength: 1, maxLength: 1000 },
+        fecha_creacion: { bsonType: "date" },
+        fecha_modificacion: { bsonType: "date" },
+        fecha_alerta: { bsonType: "date" },
+        estadoId: { bsonType: "objectId" },
+        estadoNombre: { bsonType: "string", enum: ["Pendiente","En Progreso","Completado","Archivado"] },
+        etiquetaIds: { bsonType: "array", items: { bsonType: "objectId" }, uniqueItems: true },
+        etiquetas: { bsonType: "array", items: { bsonType: "string" }, uniqueItems: true }
+      }
+    }
+  }
+});
+
+// ---------------------------
+// 2) Índices recomendados
+// ---------------------------
+db('MongoListaNotas').collection('usuarios').createIndex({ email: 1 }, { unique: true });
+db('MongoListaNotas').collection('estados').createIndex({ nombre: 1 }, { unique: true });
+db('MongoListaNotas').collection('etiquetas').createIndex({ nombre: 1 }, { unique: true });
+
+db('MongoListaNotas').collection('notas').createIndex({ usuarioId: 1 });
+db('MongoListaNotas').collection('notas').createIndex({ estadoNombre: 1 });
+db('MongoListaNotas').collection('notas').createIndex({ etiquetas: 1 });
+db('MongoListaNotas').collection('notas').createIndex({ fecha_alerta: 1 });
+
+// ---------------------------
+// 3) Datos de prueba
+// ---------------------------
+
+// Usuarios (10), con algunos perfiles embebidos
+
+db('MongoListaNotas').collection('usuarios').insertMany([
+  { nombre: "Juan",   apellido: "Perez",      email: "juan@ejemplo.com",   contrasena: "pass1",  perfil: { telefono: "3000000001", bio: "Fan de JS" }, creadoEn: new Date(), actualizadoEn: new Date() },
+  { nombre: "Maria",  apellido: "Gomez",      email: "maria@ejemplo.com",  contrasena: "pass2",  perfil: { telefono: "3000000002" }, creadoEn: new Date(), actualizadoEn: new Date() },
+  { nombre: "Carlos", apellido: "Lopez",      email: "carlos@ejemplo.com", contrasena: "pass3",  creadoEn: new Date(), actualizadoEn: new Date() },
+  { nombre: "Ana",    apellido: "Martinez",   email: "ana@ejemplo.com",    contrasena: "pass4",  perfil: { direccion: "Calle 1 #2-3" }, creadoEn: new Date(), actualizadoEn: new Date() },
+  { nombre: "Pedro",  apellido: "Garcia",     email: "pedro@ejemplo.com",  contrasena: "pass5",  creadoEn: new Date(), actualizadoEn: new Date() },
+  { nombre: "Laura",  apellido: "Rodriguez",  email: "laura@ejemplo.com",  contrasena: "pass6",  creadoEn: new Date(), actualizadoEn: new Date() },
+  { nombre: "Jorge",  apellido: "Fernandez",  email: "jorge@ejemplo.com",  contrasena: "pass7",  creadoEn: new Date(), actualizadoEn: new Date() },
+  { nombre: "Sofia",  apellido: "Diaz",       email: "sofia@ejemplo.com",  contrasena: "pass8",  creadoEn: new Date(), actualizadoEn: new Date() },
+  { nombre: "Miguel", apellido: "Sanchez",    email: "miguel@ejemplo.com", contrasena: "pass9",  creadoEn: new Date(), actualizadoEn: new Date() },
+  { nombre: "Elena",  apellido: "Torres",     email: "elena@ejemplo.com",  contrasena: "pass10", creadoEn: new Date(), actualizadoEn: new Date() },
+]);
+
+// Estados
+db('MongoListaNotas').collection('estados').insertMany([
+  { nombre: "Pendiente",    creadoEn: new Date() },
+  { nombre: "En Progreso",  creadoEn: new Date() },
+  { nombre: "Completado",   creadoEn: new Date() },
+  { nombre: "Archivado",    creadoEn: new Date() }
+]);
+
+// Etiquetas
+db('MongoListaNotas').collection('etiquetas').insertMany([
+  { nombre: "Trabajo",  creadoEn: new Date() },
+  { nombre: "Personal", creadoEn: new Date() },
+  { nombre: "Estudios", creadoEn: new Date() },
+  { nombre: "Salud",    creadoEn: new Date() },
+  { nombre: "Viajes",   creadoEn: new Date() },
+]);
+
+db('MongoListaNotas').collection('etiquetas').find({});
+db('MongoListaNotas').collection('usuarios').find({});
+db('MongoListaNotas').collection('estados').find({});
+
+db('MongoListaNotas').collection('notas').insertOne({
+    usuarioId: ObjectID('691685f5519f1988ed1af607'),
+    usuarioEmail: "juan@ejemplo.com",
+    titulo: "Comprar comestibles",
+    descripcion: "Leche, pan, huevos",
+    fecha_creacion: new Date(),
+    fecha_modificacion: new Date(),
+    fecha_alerta: new Date("2025-12-01"),
+    estadoId: ObjectID('69168632519f1988ed1af613'),
+    estadoNombre: "Pendiente",
+    etiquetaIds: [ObjectID('6916865e519f1988ed1af616')],
+    etiquetas: ["Personal"]
+});
+db('MongoListaNotas').collection('notas').insertMany([
+  {
+    usuarioId: ObjectID('691685f5519f1988ed1af607'),
+    usuarioEmail: "juan@ejemplo.com",
+    titulo: "Comprar comestibles",
+    descripcion: "Leche, pan, huevos",
+    fecha_creacion: new Date(),
+    fecha_modificacion: new Date(),
+    fecha_alerta: new Date("2025-12-01"),
+    estadoId: ObjectID('69168632519f1988ed1af611'),
+    estadoNombre: "Pendiente",
+    etiquetaIds: [ObjectID('6916865e519f1988ed1af616')],
+    etiquetas: ["Personal"]
+  },
+  {
+    usuarioId: ObjectID('691685f5519f1988ed1af608'),
+    usuarioEmail: "maria@ejemplo.com",
+    titulo: "Reunión proyecto",
+    descripcion: "Revisar avances del sprint",
+    fecha_creacion: new Date(),
+    fecha_modificacion: new Date(),
+    fecha_alerta: new Date("2025-12-05"),
+    estadoId: ObjectID('69168632519f1988ed1af612'),
+    estadoNombre: "En Progreso",
+    etiquetaIds: [ObjectID('6916865e519f1988ed1af615')],
+    etiquetas: ["Trabajo"]
+  },
+  {
+    usuarioId: ObjectID('691685f5519f1988ed1af609'),
+    usuarioEmail: "carlos@ejemplo.com",
+    titulo: "Estudiar MongoDB",
+    descripcion: "Completar curso de base de datos",
+    fecha_creacion: new Date(),
+    fecha_modificacion: new Date(),
+    fecha_alerta: new Date("2025-12-10"),
+    estadoId: ObjectID('69168632519f1988ed1af611'),
+    estadoNombre: "Pendiente",
+    etiquetaIds: [ObjectID('6916865e519f1988ed1af617')],
+    etiquetas: ["Estudios"]
+  }
+]);
+
+//agregate
+db('MongoListaNotas').collection('notas').aggregate([
+    {
+        $match:
+        {
+            etiquetas: "Estudios"
+        }
+    }
+]);
+//group by
+db('MongoListaNotas').collection('notas').aggregate([
+    {
+        $group:
+        {
+            _id: "$estadoNombre", //campo para agrupar
+            count: { $sum: 1 } //calculo
+        }
+    }
+]);
+//ordenar
+db('MongoListaNotas').collection('notas').aggregate([
+    {
+        $sort:
+        {
+            fecha_alerta: -1 //ordenar de forma descendente
+        }
+    }
+]);
+//limitar
+db('MongoListaNotas').collection('notas').aggregate([
+    {
+        $limit: 2 //limitar a 2 registros
+    }
+]);
+//projections
+db('MongoListaNotas').collection('notas').aggregate([
+    {
+        $project:
+        {
+            _id: 0, //no mostrar el campo _id
+            titulo: 1, //mostrar solo el campo titulo
+            descripcion: 1, //mostrar solo el campo descripcion
+            nuevocampo : { $multiply: [ 2, 3 ] }
+        }
+    }
+]);
+//unwind
+db('MongoListaNotas').collection('notas').aggregate([
+    {
+        $unwind: "$etiquetas" //descomponer el array etiquetas
+    }
+]);
+//lookup
+db('MongoListaNotas').collection('notas').aggregate([
+    {
+        $lookup:
+        {
+            from: "usuarios", //coleccion a unir
+            localField: "usuarioId", //campo local
+            foreignField: "_id", //campo foranea
+            as: "usuarioLookup" //alias
+        }
+    }
+]);
+//varios
+db('MongoListaNotas').collection('notas').aggregate([
+    {
+        $match:{ etiquetas: "Estudios"}
+    },
+    {
+        $group:
+        {
+            _id: "$estadoNombre",
+            count: { $sum: 1 }
+        }
+    }
+]);
+
+
